@@ -71,13 +71,15 @@ renderCalendar();
 let month_list = wrapper.querySelector(".month-list");
 
 months.forEach((e, index) => {
+  date = new Date(currYear, currMonth);
+  currYear = date.getFullYear(); // updating current year with new date year
   let month = document.createElement("div");
   month.innerHTML = `<div data-month="${index}">${e}</div>`;
   month.querySelector("div").onclick = () => {
     month_list.classList.remove("show");
     currMonth.value = index;
 
-    renderCalendar(index, currYear.value);
+    renderCalendar(index, currYear);
   };
   month_list.appendChild(month);
 });
