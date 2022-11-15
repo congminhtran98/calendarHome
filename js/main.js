@@ -77,7 +77,7 @@ months.forEach((e, index) => {
   month.innerHTML = `<div data-month="${index}">${e}</div>`;
   month.querySelector("div").onclick = () => {
     month_list.classList.remove("show");
-    currMonth.value = index;
+    currMonth = index;
 
     renderCalendar(index, currYear);
   };
