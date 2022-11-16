@@ -1,5 +1,6 @@
 let wrapper = document.querySelector(".wrapper");
 let currentDate = document.querySelector(".current-date");
+let currentYear = document.querySelector(".current-year");
 
 const daysTag = document.querySelector(".days"),
   prevNextIcon = document.querySelectorAll(".icons span");
@@ -24,8 +25,27 @@ const months = [
   "December",
 ];
 
+const years = [
+  currYear - 4,
+  currYear - 3,
+  currYear - 2,
+  currYear - 1,
+  currYear,
+  currYear + 1,
+  currYear + 2,
+  currYear + 3,
+  currYear + 4,
+  currYear + 5,
+  currYear + 6,
+  currYear + 7,
+];
+
 currentDate.onclick = () => {
   month_list.classList.add("show");
+};
+
+currentYear.onclick = () => {
+  year_list.classList.add("show");
 };
 
 const renderCalendar = (month, year) => {
@@ -41,6 +61,9 @@ const renderCalendar = (month, year) => {
 
   let curr_month = `${months[month]}`;
   currentDate.innerHTML = curr_month;
+
+  let curr_year = `${year}`;
+  currentYear.innerHTML = curr_year;
 
   for (let i = firstDayofMonth; i > 0; i--) {
     // creating li of previous month last days
@@ -69,10 +92,10 @@ const renderCalendar = (month, year) => {
 renderCalendar();
 
 let month_list = wrapper.querySelector(".month-list");
+let year_list = wrapper.querySelector(".year-list");
 
 months.forEach((e, index) => {
-  date = new Date(currYear, currMonth);
-  currYear = date.getFullYear(); // updating current year with new date year
+  // currYear = date.getFullYear(); // updating current year with new date year
   let month = document.createElement("div");
   month.innerHTML = `<div data-month="${index}">${e}</div>`;
   month.querySelector("div").onclick = () => {
@@ -82,6 +105,18 @@ months.forEach((e, index) => {
     renderCalendar(index, currYear);
   };
   month_list.appendChild(month);
+});
+
+years.forEach((e, index) => {
+  let yearr = document.createElement("div");
+  yearr.innerHTML = `<div data-year="${index}">${e}</div>`;
+  yearr.querySelector("div").onclick = () => {
+    year_list.classList.remove("show");
+    currYear = e;
+
+    renderCalendar(currMonth, e);
+  };
+  year_list.appendChild(yearr);
 });
 
 prevNextIcon.forEach((icon) => {
@@ -103,3 +138,13 @@ prevNextIcon.forEach((icon) => {
     renderCalendar(currMonth, currYear); // calling renderCalendar function
   });
 });
+
+document.querySelector("#year-change-prev").onclick = () => {
+  --currYear;
+  renderCalendar(currMonth, currYear);
+};
+
+document.querySelector("#year-change").onclick = () => {
+  ++currYear;
+  renderCalendar(currMonth, currYear);
+};
